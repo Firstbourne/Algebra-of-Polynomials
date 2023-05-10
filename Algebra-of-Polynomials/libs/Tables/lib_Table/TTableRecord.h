@@ -8,7 +8,7 @@ struct TTableRecord {
     TKey key;
     TValue value;
 
-    bool operator == (const TTableRecord& record) const {
+    bool operator == (const TTableRecord& record) {
         return this->key == record.key && this->value == record.value;
     }
 };

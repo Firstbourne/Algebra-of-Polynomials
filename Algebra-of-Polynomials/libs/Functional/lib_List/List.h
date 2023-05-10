@@ -5,11 +5,11 @@
 #include "..\lib_Node\Node.h"
 #include "..\lib_Monom\Monom.h"
 
-template <typename T>
+template <typename TValue>
 class List {
 	int _size;
-	Node<T>* last;
-	Node<T>* first;
+	Node<std::string, TValue>* last;
+	Node<std::string, TValue>* first;
 public:
 	List() {
 		_size = 0;
@@ -22,7 +22,7 @@ public:
 		last = nullptr;
 		first = nullptr;
 
-		Node<T>* current = other.last;
+		Node<std::string, TValue>* current = other.last;
 		while (current != nullptr) {
 			push_back(current->getValue());
 			current = current->getLeft();
@@ -30,12 +30,12 @@ public:
 	}
 
 
-	T& get(int index) {
+	TValue& get(int index) {
 		try {
 			if (index < 0 || index >= _size) {
 				throw std::out_of_range("Index out of range");
 			}
-			Node<T>* current = first;
+			Node<std::string, TValue>* current = first;
 			for (int i = 0; i < index; i++) {
 				current = current->getRight();
 			}
@@ -47,9 +47,9 @@ public:
 	}
 
 
-	int remove(const T& obj) {
+	int remove(const TValue& obj) {
 		try {
-			Node<T>* current = first;
+			Node<std::string, TValue>* current = first;
 			while (current != nullptr) {
 				if (current->getValue() == obj) {
 					if (current == first) {
@@ -66,8 +66,8 @@ public:
 						last->setRight(nullptr);
 					}
 					else {
-						Node<T>* left = current->getLeft();
-						Node<T>* right = current->getRight();
+						Node<std::string, TValue>* left = current->getLeft();
+						Node<std::string, TValue>* right = current->getRight();
 						left->setRight(right);
 						right->setLeft(left);
 					}
@@ -87,7 +87,7 @@ public:
 
 	int clear() {
 		while (first != nullptr) {
-			Node<T>* temp = first;
+			Node<std::string, TValue>* temp = first;
 			first = first->getRight();
 			delete temp;
 		}
@@ -103,8 +103,8 @@ public:
 		return 0;
 	};
 
-	int push_back(T obj) {
-		Node<T>* node = new Node<T>(obj);
+	int push_back(TValue obj) {
+		Node<std::string, TValue>* node = new Node<std::string, TValue>(obj);
 		if (last == nullptr) {
 			first = node;
 			last = node;
@@ -118,13 +118,13 @@ public:
 		return 0;
 	};
 
-	T pop_back() {
+	TValue pop_back() {
 		try {
 			if (last == nullptr) {
 				throw std::runtime_error("List is empty");
 			}
-			T result = last->getValue();
-			Node<T>* temp = last;
+			TValue result = last->getValue();
+			Node<std::string, TValue>* temp = last;
 			last = last->getLeft();
 			if (last != nullptr) {
 				last->setRight(nullptr);
@@ -141,8 +141,8 @@ public:
 		}
 	};
 
-	int push_front(T obj) {
-		Node<T>* node = new Node<T>(obj);
+	int push_front(TValue obj) {
+		Node<std::string, TValue>* node = new Node<std::string, TValue>(obj);
 		if (first == nullptr) {
 			first = node;
 			last = node;
@@ -156,13 +156,13 @@ public:
 		return 0;
 	};
 
-	T pop_front() {
+	TValue pop_front() {
 		try {
 			if (first == nullptr) {
 				throw std::runtime_error("List is empty");
 			}
-			T result = first->getValue();
-			Node<T>* temp = first;
+			TValue result = first->getValue();
+			Node<std::string, TValue>* temp = first;
 			first = first->getRight();
 			if (first != nullptr) {
 				first->setLeft(nullptr);
@@ -187,7 +187,7 @@ public:
 		return _size;
 	};
     int contains(Monom monom) {
-        Node<T>* current = first;
+        Node<std::string, TValue>* current = first;
         int index = 0;
         while (current != nullptr) {
             if (std::abs(static_cast<Monom>(current->getValue()).getCoeff()) == std::abs(monom.getCoeff())) {

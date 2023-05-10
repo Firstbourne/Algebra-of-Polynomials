@@ -90,13 +90,19 @@ TValue ChainMethodTable<TKey, TValue>::find(TKey key) {
 
 template <typename TKey, typename TValue>
 void ChainMethodTable<TKey, TValue>::print() {
+    std::cout << "Chain Method Table:" << std::endl;
     for (int i = 0; i < size; i++) {
         std::vector<TTableRecord<TKey, TValue>>& chain = table[i];
 
         if (!chain.empty()) {
             std::cout << "Chain " << i << ": ";
             for (auto it = chain.begin(); it != chain.end(); it++) {
-                std::cout << "{" << it->key << ": " << it->value << "} ";
+                if constexpr (std::is_same_v<TValue, Polynom>) {
+                    std::cout << "{" << it->key << ": " << it->value.toString() << "} ";
+                }
+                else {
+                    std::cout << "{" << it->key << ": " << it->value << "} ";
+                }
             }
             std::cout << std::endl;
         }
@@ -105,12 +111,12 @@ void ChainMethodTable<TKey, TValue>::print() {
 
 template <typename TKey, typename TValue>
 int ChainMethodTable<TKey, TValue>::hash(TKey key) {
-    return key % size;
+    return std::hash<TKey>()(key) % size;
 }
 
 template <typename TKey, typename TValue>
 int ChainMethodTable<TKey, TValue>::hash(TKey key, int newSize) {
-    return key % newSize;
+    return std::hash<TKey>()(key) % newSize;
 }
 
 template <typename TKey, typename TValue>

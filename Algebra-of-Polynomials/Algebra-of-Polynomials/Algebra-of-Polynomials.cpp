@@ -8,6 +8,7 @@
 #include "LinearListTable.h"
 #include "LinearArrayTable.h"
 #include "SortedArrayTable.h"
+#include "AVLTreeTable.h"
 
 using namespace std;
 
@@ -26,9 +27,9 @@ int main()
     cout << "Polynom2 = " << polynom2.toString() << endl;
 
     Polynom polynom3 = Polynom("-1.3xz^4");
-    cout << "Polynom3 = " << polynom3.toString() << endl;
+    cout << "Polynom3 = " << polynom3.toString() << endl << endl;
 
-    cout << "Polynom1 at (1,1,1) = " << polynom1.evaluate(1,1,1) << endl;
+    /*cout << "Polynom1 at (1,1,1) = " << polynom1.evaluate(1, 1, 1) << endl;
 
     Polynom plusPolynom = polynom1 + polynom2;
     cout << "Polynom1 + Polynom2 = " << plusPolynom.toString() << endl;
@@ -41,71 +42,91 @@ int main()
 
     Polynom multPPolynom = polynom1 * polynom3;
     cout << "Polynom1 * Polynom3 = " << multPPolynom.toString() << endl;
-   /* string key = "key";
-    string value = "value";
-    Node<string> node = Node(key, value);
-    cout << node.getKey() << " " << node.getValue() << endl;
-    cout << "Test";
+    cout << endl << endl;
+    */
 
-
-
-    ChainMethodTable<int, std::string> chainTable;
-
-    chainTable.insert(1, "one");
-    chainTable.insert(2, "two");
-    chainTable.insert(3, "three");
-    chainTable.insert(6, "six");
+    ChainMethodTable<std::string, Polynom> chainTable;
+    chainTable.insert("Pol_1", polynom1);
+    chainTable.insert("Pol_2", polynom2);
+    chainTable.insert("Pol_3", polynom3);
     chainTable.print();
-    cout << endl << endl;
-
-    chainTable.remove(6);
-    chainTable.print();
-    cout << endl << endl << endl << endl;
-
-    OpenShuffleTable<std::string, std::string> shuffleTable;
-
-    shuffleTable.insert("1", "one");
-    shuffleTable.insert("2", "two");
-    shuffleTable.insert("3", "three");
-    shuffleTable.insert("6", "six");
-    shuffleTable.print();
-    cout << endl << endl;
-
-    shuffleTable.remove("10");
-    shuffleTable.print();
-    cout << endl << endl << endl << endl;
-
-    LinearListTable<int, std::string> linearListTable;
-
-
-    LinearArrayTable<std::string, std::string> linearArrayTable;
-
-    linearArrayTable.insert("1", "one");
-    linearArrayTable.insert("2", "two");
-    linearArrayTable.insert("3", "three");
-    linearArrayTable.insert("6", "six");
-    linearArrayTable.print();
-    cout << endl << endl;
-    linearArrayTable.find("4");
-
     cout << endl;
+
+    chainTable.remove("Pol_2");
+    chainTable.print();
+    cout << endl;
+
+    chainTable.remove("Pol_10");
+    cout << endl << endl;
+
+    OpenShuffleTable<std::string, Polynom> openShuffleTable;
+    openShuffleTable.insert("Pol_1", polynom1);
+    openShuffleTable.insert("Pol_2", polynom2);
+    openShuffleTable.insert("Pol_3", polynom3);
+    openShuffleTable.print();
+    cout << endl;
+
+    openShuffleTable.remove("Pol_2");
+    openShuffleTable.print();
+    cout << endl;
+
+    openShuffleTable.remove("Pol_10");
+    cout << endl << endl;
+
+    SortedArrayTable<std::string, Polynom> sortedArrayTable;
+    sortedArrayTable.insert("Pol_1", polynom1);
+    sortedArrayTable.insert("Pol_2", polynom2);
+    sortedArrayTable.insert("Pol_3", polynom3);
+    sortedArrayTable.print();
+    cout << endl;
+
+    sortedArrayTable.remove("Pol_2");
+    sortedArrayTable.print();
+    cout << endl;
+
+    sortedArrayTable.remove("Pol_10");
+    cout << endl << endl;
+
+    LinearArrayTable<std::string, Polynom> linearArrayTable;
+    linearArrayTable.insert("Pol_1", polynom1);
+    linearArrayTable.insert("Pol_2", polynom2);
+    linearArrayTable.insert("Pol_3", polynom3);
     linearArrayTable.print();
-    cout << endl << endl << endl << endl;
+    cout << endl;
 
-    SortedArrayTable<std::string, std::string> sortedArrayTable;
-    sortedArrayTable.insert("1", "one");
-    sortedArrayTable.insert("6", "six");
-    sortedArrayTable.insert("3", "three");
-    sortedArrayTable.insert("2", "two");
-    sortedArrayTable.print();
+    linearArrayTable.remove("Pol_2");
+    linearArrayTable.print();
+    cout << endl;
 
+    linearArrayTable.remove("Pol_10");
     cout << endl << endl;
-    sortedArrayTable.remove("3");
-    sortedArrayTable.print();
 
+    LinearListTable<std::string, Polynom> linearListTable;
+    linearListTable.insert("Pol_1", polynom1);
+    linearListTable.insert("Pol_2", polynom2);
+    linearListTable.insert("Pol_3", polynom3);
+    linearListTable.print();
+    cout << endl;
+
+    linearListTable.remove("Pol_2");
+    linearListTable.print();
+    cout << endl;
+
+    linearListTable.remove("Pol_10");
     cout << endl << endl;
-    sortedArrayTable.find("4");
-    sortedArrayTable.print();*/
+
+    AVLTreeTable<std::string, Polynom> avlTreeTable;
+    avlTreeTable.insert("Pol_1", polynom1);
+    avlTreeTable.insert("Pol_2", polynom2);
+    avlTreeTable.insert("Pol_3", polynom3);
+    avlTreeTable.print();
+    cout << endl;
+
+    avlTreeTable.remove("Pol_2");
+    avlTreeTable.print();
+    cout << endl;
+
+    avlTreeTable.remove("Pol_10");
 
 	return 0;
 }

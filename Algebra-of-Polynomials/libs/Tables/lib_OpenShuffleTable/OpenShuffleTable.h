@@ -86,11 +86,17 @@ TValue OpenShuffleTable<TKey, TValue>::find(TKey key) {
 
 template <typename TKey, typename TValue>
 void OpenShuffleTable<TKey, TValue>::print() {
+    std::cout << "Open Shuffle Table:" << std::endl;
     std::cout << "{ ";
     for (int i = 0; i < size; i++) {
         if (data[i].key != TKey()) {
+            if constexpr (std::is_same_v<TValue, Polynom>) {
+                std::cout << "(" << data[i].key << ", " << data[i].value.toString() << ") ";
+            }
+            else {
+                std::cout << "(" << data[i].key << ", " << data[i].value << ") ";
+            }
             
-            std::cout << "(" << data[i].key << ", " << data[i].value << ") ";
         }
     }
     std::cout << "}" << std::endl;

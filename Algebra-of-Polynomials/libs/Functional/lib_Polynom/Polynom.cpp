@@ -16,10 +16,6 @@ Polynom::~Polynom() {
     monoms.resetList();
 }
 
-
-
-
-
 Polynom& Polynom::operator=(const Polynom& polynom) {
     monoms = polynom.monoms;
     return *this;

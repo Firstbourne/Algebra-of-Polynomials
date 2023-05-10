@@ -56,8 +56,14 @@ TValue LinearListTable<TKey, TValue>::find(TKey key) {
 
 template <typename TKey, typename TValue>
 void LinearListTable<TKey, TValue>::print() {
+    std::cout << "Linear List Table:" << std::endl;
     for (int i = 0; i < data.size(); i++) {
-        std::cout << "Key: " << data.get(i).key << ", Value: " << data.get(i).value << std::endl;
+        if constexpr (std::is_same_v<TValue, Polynom>) {
+            std::cout << "Key: " << data.get(i).key << ", Value: " << data.get(i).value.toString() << std::endl;
+        }
+        else {
+            std::cout << "Key: " << data.get(i).key << ", Value: " << data.get(i).value << std::endl;
+        }
     }
 }
 

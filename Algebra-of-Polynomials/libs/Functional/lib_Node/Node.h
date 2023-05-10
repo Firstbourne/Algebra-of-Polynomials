@@ -4,23 +4,23 @@
 #include <string>
 #include <sstream>
 
-template <typename T>
+template <typename TKey, typename TValue>
 class Node {
-    T value;
-	T key;
-	Node<T>* left;
-	Node<T>* right;
-	Node<T>* top;
+    TValue value;
+    TKey key;
+	Node<TKey, TValue>* left;
+	Node<TKey, TValue>* right;
+	Node<TKey, TValue>* top;
 	
 public:
-    Node(T key, T value) {
+    Node(TKey key, TValue value) {
         this->key = key;
         this->value = value;
         left = nullptr;
         right = nullptr;
         top = nullptr;
     };
-    Node(T value) {
+    Node(TValue value) {
         this->value = value;
         left = nullptr;
         right = nullptr;
@@ -31,38 +31,37 @@ public:
         right = nullptr;
         top = nullptr;
     }
-	T& getValue() {
-
+	TValue& getValue() {
         return value;
     };
-	T getKey() {
+    TKey getKey() {
         return key;
     };
-	void setValue(T value) {
+	void setValue(TValue value) {
         this->value = value;
     };
-	void setKey(T key) {
+	void setKey(TKey key) {
         this->key = key;
     };
-	void setLeft(Node<T>* left) {
+	void setLeft(Node<TKey, TValue>* left) {
         this->left = left;
     };
-	void setRight(Node<T>* right) {
+	void setRight(Node<TKey, TValue>* right) {
         this->right = right;
     };
-	void setTop(Node<T>* top) {
+	void setTop(Node<TKey, TValue>* top) {
         this->top = top;
     };
-	Node<T>* getLeft() {
+	Node<TKey, TValue>* getLeft() {
         return left;
     };
-	Node<T>* getRight() {
+	Node<TKey, TValue>* getRight() {
         return right;
     };
-	Node<T>* getTop() {
+	Node<TKey, TValue>* getTop() {
         return top;
     };
-	Node<T>& operator= (const Node<T>& node) {
+	Node<TKey, TValue>& operator= (const Node<TKey, TValue>& node) {
         if (this == &node) return *this;
         key = node.key;
         value = node.value;
@@ -72,7 +71,7 @@ public:
         return *this;
     };
 
-    std::string toString(T t) {
+    std::string toString(TValue t) {
         std::ostringstream ss;
         ss << t;
         return ss.str();

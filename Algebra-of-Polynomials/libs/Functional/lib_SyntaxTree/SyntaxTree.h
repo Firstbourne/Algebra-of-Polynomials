@@ -6,7 +6,7 @@
 #include "Stack.h"
 #include "Monom.h"
 
-template <typename T, typename T1>
+template <typename TKay, typename TValue>
 class SyntaxTree {
     const std::map<std::string, int> operationsPriority = {
             {"(", 0},
@@ -19,12 +19,12 @@ class SyntaxTree {
     };
     const std::string specialOperations[3] = {"/", "^", "-"};
     bool flag = false;
-    Stack<T> stack = Stack<T>(10);
-	Node<T>* root = nullptr;
-    Node<T>* treeRoot = nullptr;
-	Node<T>* addNodeRecursive(Node<T>* current, std::string data) {
+    Stack<TValue> stack = Stack<TValue>(10);
+	Node<TKay, TValue>* root = nullptr;
+    Node<TKay, TValue>* treeRoot = nullptr;
+	Node<TKay, TValue>* addNodeRecursive(Node<TKay, TValue>* current, std::string data) {
         if (current == nullptr) {
-            Node<T>* tmp = new Node<T>(data);
+            Node<TKay, TValue>* tmp = new Node<TValue>(data);
             treeRoot = tmp;
             return tmp;
         }
@@ -32,7 +32,7 @@ class SyntaxTree {
         flag = in(current->getValue());
         if (current->getRight() == nullptr) {
             if (!flag) {
-                current->setRight(new Node<T>(data));
+                current->setRight(new Node<TKay, TValue>(data));
                 current->getRight()->setTop(current);
                 if (!isOperation(data)) {
                     return current;
@@ -40,7 +40,7 @@ class SyntaxTree {
                 return current->getRight();
             }
             if (current->getLeft()!= nullptr) {
-                current->setRight(new Node<T>(data));
+                current->setRight(new Node<TKay, TValue>(data));
                 current->getRight()->setTop(current);
                 if(!isOperation(data)) {
                     return current;
@@ -49,7 +49,7 @@ class SyntaxTree {
             }
         }
         if (current->getLeft() == nullptr) {
-            current->setLeft(new Node<T>(data));
+            current->setLeft(new Node<TKay, TValue>(data));
             current->getLeft()->setTop(current);
             if (!isOperation(data)) {
                 return current;
@@ -59,10 +59,10 @@ class SyntaxTree {
         return current;
     };
 
-	void createSyntaxTreeStack(Node<T> *current) {
+	void createSyntaxTreeStack(Node<TKay, TValue> *current) {
     };
 
-    std::string toStringRecursive(Node<T>* root) {
+    std::string toStringRecursive(Node<TKay, TValue>* root) {
         if (root == nullptr) {
             return "";
         }
@@ -77,7 +77,7 @@ class SyntaxTree {
         return result;
     }
 
-	void deleteTree(Node<T>* current) {
+	void deleteTree(Node<TKay, TValue>* current) {
         if (current != nullptr) {
             deleteTree(current->getLeft());
             deleteTree(current->getRight());
@@ -85,14 +85,14 @@ class SyntaxTree {
         }
     };
 
-    bool in(T data) {
+    bool in(TValue data) {
         for (const auto & specialOperation : specialOperations) {
             if (std::string(data) == specialOperation)
                 return true;
         }
         return false;
     }
-    bool isOperation(T data) {
+    bool isOperation(TValue data) {
         return operationsPriority.contains(std::string(data));
     }
 public:
@@ -102,12 +102,12 @@ public:
         deleteTree(root);
     };
 
-	void create(T* source, int size) {
+	void create(TValue* source, int size) {
         for (int i = size - 1; i >= 0; i--) {
             insert(source[i]);
         }
     };
-	void insert(T obj) {
+	void insert(TValue obj) {
         root = addNodeRecursive(root, obj);
     };
     std::string toString() {

@@ -2,12 +2,11 @@
 #define LIB_TREE_TREE_H_
 #include "..\lib_Node\Node.h"
 
-template <typename T>
+template <typename TKey, typename TValue>
 class Tree { 
 public:
-	virtual void create(T* source, int size);
-	virtual void insert(T obj);
-	virtual void remove(T obj);
-    virtual T find(T key);
+	virtual int insert(TKey key, TValue value) = 0;
+	virtual int remove(TKey key) = 0;
+    virtual TValue find(TKey key) = 0;
 };
 #endif // !LIB_TREE_TREE_H_

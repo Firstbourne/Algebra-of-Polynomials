@@ -13,5 +13,8 @@ add_depend(Algebra-of-Polynomials lib_ChainMethodTable "../libs/Tables/lib_Chain
 add_depend(Algebra-of-Polynomials lib_LinearListTable "../libs/Tables/lib_LinearListTable")
 add_depend(Algebra-of-Polynomials lib_LinearArrayTable "../libs/Tables/lib_LinearArrayTable")
 add_depend(Algebra-of-Polynomials lib_SortedArrayTable "../libs/Tables/lib_SortedArrayTable")
+add_depend(Algebra-of-Polynomials lib_LinearArrayTable "../libs/Tables/lib_LinearArrayTable")
+add_depend(Algebra-of-Polynomials lib_SortedArrayTable "../libs/Tables/lib_SortedArrayTable")
+add_depend(Algebra-of-Polynomials lib_AVLTreeTable "../libs/Tables/lib_AVLTreeTable")
 
 # TODO: Добавьте тесты и целевые объекты, если это необходимо.

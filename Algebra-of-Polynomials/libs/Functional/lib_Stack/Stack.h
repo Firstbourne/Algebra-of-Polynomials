@@ -5,26 +5,26 @@
 #include <string>
 #include <stdexcept>
 
-template <class T>
+template <class TValue>
 class Stack {
 private:
-	T* data;
+	TValue* data;
 	int _top;
 	int size;
 public:
     Stack() {
         size = 10;
         _top = -1;
-        data = new T[size];
+        data = new TValue[size];
     };
     Stack(int size) {
         this->size = size;
         _top = -1;
-        data = new T[size];
+        data = new TValue[size];
     };
-	int push(T value) {
+	int push(TValue value) {
         if (isFull()) {
-            T* newData = new T[size + 1];
+            TValue* newData = new TValue[size + 1];
             for (int i = 0; i < size; i++) {
                 newData[i] = data[i];
             }
@@ -36,13 +36,13 @@ public:
         data[_top] = value;
         return 1;
     };
-	T pop() {
+	TValue pop() {
         if (isEmpty())
             throw std::logic_error("Stack is empty");
         else
             NULL;
-        T tmp = data[_top];
-        T* newData = new T[size - 1];
+        TValue tmp = data[_top];
+        TValue* newData = new TValue[size - 1];
         for (int i = 0; i < size - 1; i++) {
             newData[i] = data[i];
         }
@@ -58,15 +58,15 @@ public:
 	bool isEmpty() {
         return _top == -1;
     };
-	T top() {
+	TValue top() {
         return data[_top];
     };
-	Stack<T>& operator=(const Stack<T>& stk) {
+	Stack<TValue>& operator=(const Stack<TValue>& stk) {
         if (this != &stk) {
             delete[] data;
             size = stk.size;
             _top = stk.top;
-            data = new T[size];
+            data = new TValue[size];
             for (int i = 0; i <= _top; i++) {
                 data[i] = stk.data[i];
             }

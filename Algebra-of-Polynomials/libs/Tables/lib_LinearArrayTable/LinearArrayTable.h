@@ -86,9 +86,15 @@ TValue LinearArrayTable<TKey, TValue>::find(TKey key) {
 
 template <typename TKey, typename TValue>
 void LinearArrayTable<TKey, TValue>::print() {
+	std::cout << "Linear Array Table:" << std::endl;
 	std::cout << "Table contents:" << std::endl;
 	for (size_t index = 0; index < count; index++) {
-		std::cout << "  " << data[index].key << ": " << data[index].value << std::endl;
+		if constexpr (std::is_same_v<TValue, Polynom>) {
+			std::cout << "  " << data[index].key << ": " << data[index].value.toString() << std::endl;
+		}
+		else {
+			std::cout << "  " << data[index].key << ": " << data[index].value << std::endl;
+		}
 	}
 }
 

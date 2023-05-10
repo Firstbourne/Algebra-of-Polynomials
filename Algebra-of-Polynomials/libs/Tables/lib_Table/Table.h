@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "TTableRecord.h"
+#include "../../Functional/lib_Polynom/Polynom.h"
 template <typename TKey, typename TValue>
 class Table {
 public:
