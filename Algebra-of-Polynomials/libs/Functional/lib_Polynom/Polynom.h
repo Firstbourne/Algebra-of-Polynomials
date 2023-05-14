@@ -3,12 +3,14 @@
 
 #include "..\lib_Monom\Monom.h"
 #include "..\lib_List\List.h"
+//#include "SortedArrayTable.h"
 
 class Polynom {
     List<Monom> monoms;
 public:
     Polynom() = default;
     Polynom(std::string);
+   // Polynom(std::string expression, SortedArrayTable<std::string,Polynom> *table);
     Polynom(const Polynom& polynom);
     ~Polynom();
 
@@ -20,7 +22,7 @@ public:
     Polynom operator*(const double x);
     Polynom operator*(const Polynom& polynom);
     Polynom operator/(const double x);
-    Polynom operator/(const Polynom& polynom);
+    //Polynom operator/(const Polynom& polynom);
     bool operator==(const Polynom& polynom);
     bool operator!=(const Polynom& polynom);
     bool operator>(const Polynom& polynom);

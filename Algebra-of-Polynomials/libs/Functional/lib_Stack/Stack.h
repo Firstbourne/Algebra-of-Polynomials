@@ -24,7 +24,7 @@ public:
     };
 	int push(TValue value) {
         if (isFull()) {
-            TValue* newData = new TValue[size + 1];
+            TValue* newData = new TValue[size *= 2];
             for (int i = 0; i < size; i++) {
                 newData[i] = data[i];
             }

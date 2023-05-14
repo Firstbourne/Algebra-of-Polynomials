@@ -29,6 +29,18 @@ public:
 		}
 	}
 
+	List<TValue>& operator=(const List<TValue>& other) {
+		_size = 0;
+		last = nullptr;
+		first = nullptr;
+		Node<std::string, TValue>* current = other.last;
+		while (current != nullptr) {
+			push_back(current->getValue());
+			current = current->getLeft();
+		}
+		return *this;
+	}
+
 
 	TValue& get(int index) {
 		try {

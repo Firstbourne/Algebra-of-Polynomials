@@ -2,7 +2,7 @@
 #define LIB_SORTEDARRAYTABLE_SORTEDARRAYTABLE_H_
 
 #include "..\lib_SortedTable\SortedTable.h"
-#include "..\..\Functional\lib_List\List.h"
+
 template <typename TKey, typename TValue>
 class SortedArrayTable : public SortedTable<TKey, TValue> {
 	size_t size;
@@ -89,21 +89,16 @@ void SortedArrayTable<TKey, TValue>::swap(TTableRecord<TKey, TValue>& a, TTableR
 
 template<typename TKey, typename TValue>
 int SortedArrayTable<TKey, TValue>::remove(TKey key) {
-	try {
-		for (size_t index = 0; index < count; index++) {
-			if (data[index].key == key) {
-				for (size_t j = index + 1; j < count; j++) {
-					data[j - 1] = data[j];
-				}
-				count--;
-				return 0;
+	for (size_t index = 0; index < count; index++) {
+		if (data[index].key == key) {
+			for (size_t j = index + 1; j < count; j++) {
+				data[j - 1] = data[j];
 			}
+			count--;
+			return 0;
 		}
-		throw std::runtime_error("This object not found");
 	}
-	catch (const std::exception& ex) {
-		std::cerr << "Error:" << ex.what() << std::endl;
-	}
+	throw std::runtime_error("This object not found");
 }
 
 template<typename TKey, typename TValue>

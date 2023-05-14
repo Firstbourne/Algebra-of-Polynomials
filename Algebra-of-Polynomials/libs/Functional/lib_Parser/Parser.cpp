@@ -1,4 +1,5 @@
 #include "Parser.h"
+#include "../lib_Polynom/Polynom.h"
 
 Parser::Parser() {
     targetExpression = "";
@@ -7,13 +8,21 @@ Parser::Parser() {
 Parser::Parser(std::string expression) {
     targetExpression = expression;
     removeSpaces();
+    table = new SortedArrayTable<std::string, Polynom>();
 }
+Parser::Parser(std::string expression, SortedArrayTable<std::string, Polynom> *table) {
+    targetExpression = expression;
+    removeSpaces();
+    this->table = table;
+}
+
+
 //COMPLETED
 List<Monom> Parser::parse() {
      std::string delimeter = "+-";
      std::string token;
      size_t start = 0, end = targetExpression.find_first_of(delimeter, start);
-     if (end != 0) {
+     if (end != std::string::npos && end != 0) {
          token = targetExpression.substr(start, end - start);
          parseMonom(token);
          start = ++end;
@@ -39,12 +48,11 @@ List<Monom> Parser::parse() {
      }
      return list;
 }
-
-
 //COMPLETED
 void Parser::removeSpaces() {
     targetExpression.erase(std::remove(targetExpression.begin(), targetExpression.end(), ' '), targetExpression.end());
 }
+
 //COMPLETED
 void Parser::parseMonom(std::string monom) {
     double coeff = 1;
@@ -90,4 +98,90 @@ void Parser::removeSpaces(std::string& expression) {
         start = ++end;
     }
     expression = token;
+}
+
+bool Parser::isDigit(char c) {
+    if ('0' <= c && c <= '9') return true;
+    else return false;
+}
+
+Polynom Parser::calculate() {
+    Stack<Polynom> stack;
+    for (int i = 0; i < postfixExpression.size(); i++) {
+        char expressionChar = postfixExpression[i];
+        if (isDigit(expressionChar)) {
+            Polynom tmp = Polynom(parseNumber(postfixExpression, &i));
+            stack.push(tmp);
+        } else if (operationsPriority.contains(expressionChar)) {
+            Polynom second = stack.isEmpty() ? Polynom("0") : stack.top();
+            stack.pop();
+            Polynom first = stack.isEmpty() ? Polynom("0") : stack.top();
+            stack.pop();
+            stack.push(execute(expressionChar, first, second));
+        } else if (expressionChar != ' '){
+            Polynom tmp = table->find(parseKey(postfixExpression, &i));
+            stack.push(tmp);
+        }
+    }
+    return stack.top();
+}
+
+std::string Parser::parseNumber(std::string expression, int *position) {
+    std::string number = "";
+    for (; (*position) < expression.length(); (*position)++) {
+        char expressionChar = expression[(*position)];
+        if (isDigit(expressionChar))
+            number += expressionChar;
+        else {
+            (*position)--;
+            break;
+        }
+    }
+    return number;
+}
+
+std::string Parser::parseKey(std::string expression, int *position) {
+    std::string key = "";
+    for(; (*position) < expression.size(); (*position)++) {
+        char expressionChar = expression[(*position)];
+        if (!operationsPriority.contains(expressionChar) && expressionChar != ' ') {
+            key+=expressionChar;
+        } else  {
+            (*position)--;
+            break;
+        }
+    }
+    return key;
+}
+
+void Parser::toPostfix(std::string expression) {
+    postfixExpression = "";
+    Stack<char> operations;
+    for (int i = 0; i < expression.size(); i++) {
+        char expressionChar = expression[i];
+        if (isDigit(expressionChar)) {
+            postfixExpression += parseNumber(expression, &i) + " ";
+        } else if (operationsPriority.contains(expressionChar)) {
+            operations.push(expressionChar);
+        } else if (expressionChar != ' ') {
+            postfixExpression += parseKey(expression, &i) + " ";
+        }
+    }
+    while (!operations.isEmpty()) {
+        postfixExpression += operations.top();
+        operations.pop();
+    }
+}
+
+Polynom Parser::execute(char operation, Polynom first, Polynom second){
+    switch (operation) {
+        case '+':
+            return first + second;
+        case '-':
+            return first - second;
+        case '*':
+            return first * second;
+        /*case '/':
+            return first / second;*/
+    }
 }

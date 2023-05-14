@@ -53,19 +53,14 @@ int OpenShuffleTable<TKey, TValue>::insert(TKey key, TValue value) {
 
 template <typename TKey, typename TValue>
 int OpenShuffleTable<TKey, TValue>::remove(TKey key) {
-    try {
-        int index = findFreeIndex(key);
-        if (index != -1) {
-            // Åñëè íàøëè ýëåìåíò ñ òàêèì æå êëþ÷îì, òî óäàëÿåì åãî
-            data[index] = TTableRecord<TKey, TValue>(TKey(), TValue());
-            count--;
-            return 0;
-        }
-        throw std::runtime_error("This object not found");
+    int index = findFreeIndex(key);
+    if (index != -1) {
+        // Åñëè íàøëè ýëåìåíò ñ òàêèì æå êëþ÷îì, òî óäàëÿåì åãî
+        data[index] = TTableRecord<TKey, TValue>(TKey(), TValue());
+        count--;
+        return 0;
     }
-    catch (const std::exception& ex) {
-        std::cerr << "Error:" << ex.what() << std::endl;
-    }
+    throw std::runtime_error("This object not found");
 }
 
 template <typename TKey, typename TValue>

@@ -51,21 +51,16 @@ int LinearArrayTable<TKey, TValue>::insert(TKey key, TValue value) {
 
 template <typename TKey, typename TValue>
 int LinearArrayTable<TKey, TValue>::remove(TKey key) {
-	try {
-		for (size_t index = 0; index < count; index++) {
-			if (data[index].key == key) {
-				for (size_t j = index + 1; j < count; j++) {
-					data[j - 1] = data[j];
-				}
-				count--;
-				return 0;
+	for (size_t index = 0; index < count; index++) {
+		if (data[index].key == key) {
+			for (size_t j = index + 1; j < count; j++) {
+				data[j - 1] = data[j];
 			}
+			count--;
+			return 0;
 		}
-		throw std::runtime_error("This object not found");
 	}
-	catch (const std::exception& ex) {
-		std::cerr << "Error:" << ex.what() << std::endl;
-	}
+	throw std::runtime_error("This object not found");
 }
 
 template <typename TKey, typename TValue>

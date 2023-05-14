@@ -50,22 +50,17 @@ int ChainMethodTable<TKey, TValue>::insert(TKey key, TValue value) {
 
 template <typename TKey, typename TValue>
 int ChainMethodTable<TKey, TValue>::remove(TKey key) {
-    try {
-        int index = hash(key);
-        std::vector<TTableRecord<TKey, TValue>>& chain = table[index];
+    int index = hash(key);
+    std::vector<TTableRecord<TKey, TValue>>& chain = table[index];
 
-        for (auto it = chain.begin(); it != chain.end(); it++) {
-            if (it->key == key) {
-                chain.erase(it);
-                count--;
-                return 0;
-            }
+    for (auto it = chain.begin(); it != chain.end(); it++) {
+        if (it->key == key) {
+            chain.erase(it);
+            count--;
+            return 0;
         }
-        throw std::runtime_error("This object not found");
     }
-    catch (const std::exception& ex) {
-        std::cerr << "Error:" << ex.what() << std::endl;
-    }
+    throw std::runtime_error("This object not found");
 }
 
 template <typename TKey, typename TValue>
