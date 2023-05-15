@@ -1,2 +1,2 @@
-#include <gtest.h>
-#include "../libs/lib_LinearListTable/LinearListTable.h"
+#include "gtest/gtest.h"
+#include "../libs/Tables/lib_LinearListTable/LinearListTable.h"

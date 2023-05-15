@@ -1,6 +1,2 @@
-#include <gtest/gtest.h>
+#include "gtest/gtest.h"
 #include "../libs/Tables/lib_HashTable/HashTable.h"
-
-TEST(aaa, bbb) {
-
-}

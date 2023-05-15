@@ -1,30 +1,24 @@
-#include "../gtest/gtest.h"
-#include "Monom.h"
-TEST(Monom_comparisons, Monom_less){};
-TEST(Monom_comparisons, Monom_greater) {};
-TEST(Monom_comparisons, Monom_less_or_equal) {};
-TEST(Monom_comparisons, Monom_greater_or_equal) {};
-TEST(Monom_comparisons, Monom_equal) {};
-TEST(Monom_comparisons, Monom_not_equal) {};
+#include "gtest/gtest.h"
+#include "../libs/Functional/lib_Monom/Monom.cpp"
 
-TEST(Monom_operations, Monom_plus) {
-    // Test adding two monomials with the same variables and powers
-    Monom m1(2, 3, { 1, 2 });
-    Monom m2(4, 3, { 1, 2 });
-    Monom result = m1 + m2;
-    EXPECT_EQ(result.getCoeff(), 6);
-    EXPECT_EQ(result.getNumVars(), 2);
-    EXPECT_EQ(result.getPowers()[0], 1);
-    EXPECT_EQ(result.getPowers()[1], 2);
-};
-TEST(Monom_operations, Monom_minus) {};
-TEST(Monom_operations, Monom_unar_minus) {};
-TEST(Monom_operations, Monom_mult) {};
-TEST(Monom_operations, Monom_mult_on_number) {};
-TEST(Monom_operations, Monom_div) {};
-TEST(Monom_operations, Monom_div_on_number) {};
-TEST(Monom_operations, Monom_assignment) {};
+TEST(Monom_op, plus_if) {
+	int* powers1 = new int[3] {2, 1, 0};
+	int* powers2 = new int[3] {1, 1, 0};
+	Monom m1(3.0, 3, powers1);
+	Monom m2(3.0, 3, powers1);
 
-TEST(Monom_methods, Monom_get_coefficient) {};
-TEST(Monom_methods, Monom_get_powers) {};
+	assert(m1 == m2);
+	EXPECT_EQ(m1, m2);
+}
+TEST(Monom_op, plus_not_if) {
+	int* powers1 = new int[3] {2, 1, 0};
+	int* powers2 = new int[3] {1, 1, 0};
+	Monom m1(3.0, 3, powers1);
+	Monom m2(3.0, 3, powers2);
+	assert(m1 != m2);
+	EXPECT_NE(m1, m2);
+}
+ 
+
+
 

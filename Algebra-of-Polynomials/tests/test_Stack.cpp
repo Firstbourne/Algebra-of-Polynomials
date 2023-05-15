@@ -1,5 +1,5 @@
-#include <gtest.h>
-#include "../libs/lib_Stack/Stack.h"
+#include "gtest/gtest.h"
+#include "../libs/Functional/lib_Stack/Stack.h"
 TEST(Stack_methods, Stack_push) {};
 TEST(Stack_methods, Stack_pop) {};
 TEST(Stack_methods, Stack_is_full) {};

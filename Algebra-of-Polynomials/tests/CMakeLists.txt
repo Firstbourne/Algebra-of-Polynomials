@@ -19,6 +19,7 @@ add_executable(
     test_Tree.cpp
     test_UnorderedTable.cpp
     test_UnsortedTable.cpp
+    test_SyntaxTree.cpp
 )
 target_link_libraries(
     AllTests

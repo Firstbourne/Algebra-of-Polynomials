@@ -1,2 +1,2 @@
-#include <gtest.h>
-#include "../libs/lib_Tree/Tree.h"
+#include "gtest/gtest.h"
+#include "../libs/Functional/lib_Tree/Tree.h"

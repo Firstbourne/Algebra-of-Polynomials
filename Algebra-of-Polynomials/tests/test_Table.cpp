@@ -1,2 +1,2 @@
-#include <gtest.h>
-#include "../libs/lib_Table/Table.h"
+#include "gtest/gtest.h"
+#include "../libs/Tables/lib_Table/Table.h"

@@ -1,2 +1,2 @@
-#include <gtest.h>
-#include "../libs/lib_SortedArrayTable/SortedArrayTable.h"
+#include "gtest/gtest.h"
+#include "../libs/Tables/lib_SortedArrayTable/SortedArrayTable.h"

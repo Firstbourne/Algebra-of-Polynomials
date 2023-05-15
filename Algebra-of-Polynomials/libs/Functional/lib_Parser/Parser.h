@@ -8,7 +8,7 @@
 #include "../lib_Monom/Monom.h"
 #include "../lib_SyntaxTree/SyntaxTree.h"
 #include "../lib_List/List.h"
-#include "SortedArrayTable.h"
+#include "../lib_SortedArrayTable/SortedArrayTable.h"
 
 class Parser {
     std::string infixExpression;

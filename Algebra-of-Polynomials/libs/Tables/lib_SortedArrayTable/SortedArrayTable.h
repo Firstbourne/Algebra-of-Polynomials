@@ -2,6 +2,7 @@
 #define LIB_SORTEDARRAYTABLE_SORTEDARRAYTABLE_H_
 
 #include "..\lib_SortedTable\SortedTable.h"
+#include <algorithm>
 
 template <typename TKey, typename TValue>
 class SortedArrayTable : public SortedTable<TKey, TValue> {
@@ -9,9 +10,6 @@ class SortedArrayTable : public SortedTable<TKey, TValue> {
 	size_t count;
 	TTableRecord<TKey, TValue>* data;
 	double loadFactor;
-	virtual void sort() override;
-	void quickSort(TTableRecord<TKey, TValue>* tmpData, int left, int right);
-	void swap(TTableRecord<TKey, TValue>& a, TTableRecord<TKey, TValue>& b);
 public:
 	SortedArrayTable();
 	~SortedArrayTable();
@@ -37,54 +35,39 @@ SortedArrayTable<TKey, TValue>::~SortedArrayTable() {
 template<typename TKey, typename TValue>
 int SortedArrayTable<TKey, TValue>::insert(TKey key, TValue value) {
 	if (count >= size * loadFactor) {
-		size *= 2;
-		TTableRecord<TKey, TValue>* newData = new TTableRecord<TKey, TValue>[size];
-		for (size_t index = 0; index < count; index++) {
-			newData[index] = data[index];
-		}
+		size_t newSize = size * 2;
+		TTableRecord<TKey, TValue>* newData = new TTableRecord<TKey, TValue>[newSize];
+		std::copy(data, data + count, newData);
 		delete[] data;
 		data = newData;
+		size = newSize;
 	}
 
-	data[count].key = key;
-	data[count].value = value;
-	count++;
-	sort();
-	return 0;
-}
+	size_t left = 0;
+	size_t right = count;
 
-template<typename TKey, typename TValue>
-void SortedArrayTable<TKey, TValue>::sort() {
-	quickSort(data, 0, count - 1);
-}
-
-template<typename TKey, typename TValue>
-void SortedArrayTable<TKey, TValue>::quickSort(TTableRecord<TKey, TValue>* tmpData, int left, int right) {
-	int i = left, j = right;
-	TKey middle = tmpData[(left + right) / 2].key;
-
-	while (i <= j) {
-		while (tmpData[i].key < middle)
-			i++;
-		while (tmpData[j].key > middle)
-			j--;
-		if (i <= j) {
-			swap(tmpData[i], tmpData[j]);
-			i++;
-			j--;
+	while (left < right) {
+		size_t mid = (left + right) / 2;
+		if (data[mid].key == key) {
+			throw std::runtime_error("Duplicate key");
+		}
+		else if (data[mid].key < key) {
+			left = mid + 1;
+		}
+		else {
+			right = mid;
 		}
 	}
-	if (left < j)
-		quickSort(tmpData, left, j);
-	if (i < right)
-		quickSort(tmpData, i, right);
-}
 
-template<typename TKey, typename TValue>
-void SortedArrayTable<TKey, TValue>::swap(TTableRecord<TKey, TValue>& a, TTableRecord<TKey, TValue>& b) {
-	TTableRecord<TKey, TValue> tmp = a;
-	a = b;
-	b = tmp;
+	for (size_t i = count; i > left; --i) {
+		data[i] = data[i - 1];
+	}
+
+	data[left].key = key;
+	data[left].value = value;
+	++count;
+
+	return 0;
 }
 
 template<typename TKey, typename TValue>

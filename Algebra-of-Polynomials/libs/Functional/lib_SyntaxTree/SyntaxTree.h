@@ -2,9 +2,9 @@
 #define LIB_SYNTAXTREE_SYNTAXTREE_H_
 
 #include <map>
-#include "Node.h"
-#include "Stack.h"
-#include "Monom.h"
+#include "../lib_Node/Node.h"
+#include "../lib_Stack/Stack.h"
+#include "../lib_Monom/Monom.h"
 
 template <typename TKay, typename TValue>
 class SyntaxTree {
